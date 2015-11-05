@@ -4,7 +4,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       dist: {
-        src: ['public/client/*.js']
+        src: ['public/client/*.js'],
+        dest: 'dist/<%= pkg.name %>.js'
       }
     },
 
@@ -23,7 +24,17 @@ module.exports = function(grunt) {
       }
     },
 
+    // copy pasted this from http://gruntjs.com/sample-gruntfile
     uglify: {
+      options: {
+        // the banner is inserted at the top of the output
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+      },
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+        }
+      }
     },
 
     jshint: {
@@ -92,12 +103,15 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
+  grunt.registerTask('default', 'Log some stuff.', function() {
+    grunt.log.write('Logging some stuff...').ok();
+  });
+
   grunt.registerTask('test', [
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
-  ]);
+  grunt.registerTask('build', [ 'concat: dist', 'uglify: dist']);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
