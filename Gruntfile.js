@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: ['public/client/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/theConcatFile.js'
       }
     },
 
@@ -28,11 +28,11 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         // the banner is inserted at the top of the output
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '/*! theConcatFile <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'dist/theConcatFile.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
