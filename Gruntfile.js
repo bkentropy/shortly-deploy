@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-      
+
     concat: {
       dist: {
         src: ['public/client/*.js'],
@@ -53,13 +53,17 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      dist: {
+        src: ['public/style.css'],
+        dest: 'dist/cssmin.css'
+      }
     },
 
     watch: {
       scripts: {
         files: [
-          'public/client/**/*.js',
-          'public/lib/**/*.js',
+          'public/client/**/*.js', //need to be changed?
+          'public/lib/**/*.js', //need to be changed?
         ],
         tasks: [
           'concat',
@@ -112,7 +116,7 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [ 'concat', 'uglify' ]);
+  grunt.registerTask('build', [ 'concat', 'uglify', 'cssmin' ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
